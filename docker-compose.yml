@@ -1,0 +1,35 @@
+version: "3.5"
+services:
+  redis:
+    image: redis
+    container_name: redis
+    hostname: redis
+    ports:
+      - "6400:6379"
+    volumes:
+      - /Users/koko/opt/redis/etc/redis.conf:/usr/local/etc/redis/redis.conf
+      - /Users/koko/opt/redis/data/log:/data/log
+      - /Users/koko/opt/redis/data/basis:/data/bases
+    command: redis-server /usr/local/etc/redis/redis.conf
+    networks:
+    - redis
+  flu:
+    image: flu-docker
+    hostname: flu
+    environment:
+      - DbaseUrl=/v1
+      - DredisHost=http://redis
+      - DredisPort=6400
+    ports:
+      - "8081:8081"
+    networks:
+    - flu
+    depends_on:
+      - redis
+
+networks:
+  redis:
+    name: flun
+  flu:
+    name: flun
+
