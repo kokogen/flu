@@ -6,13 +6,15 @@ services:
     hostname: redis
     ports:
       - "6400:6379"
+    expose:
+      - "6400"
     volumes:
       - /Users/koko/opt/redis/etc/redis.conf:/usr/local/etc/redis/redis.conf
       - /Users/koko/opt/redis/data/log:/data/log
       - /Users/koko/opt/redis/data/basis:/data/bases
     command: redis-server /usr/local/etc/redis/redis.conf
     networks:
-    - redis
+    - default
   flu:
     image: flu-docker
     hostname: flu
@@ -23,13 +25,8 @@ services:
     ports:
       - "8081:8081"
     networks:
-    - flu
+    - default
     depends_on:
       - redis
 
-networks:
-  redis:
-    name: flun
-  flu:
-    name: flun
 
