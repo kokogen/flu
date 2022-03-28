@@ -36,7 +36,7 @@ public class HeartBeatServiceConfig {
         template.setHashValueSerializer(new StringRedisSerializer());
         template.setValueSerializer(new GenericToStringSerializer<String>(String.class));
 
-        logger.info("3: redisHost={}, redisPort={}", redisHost, redisPort);
+        logger.info("redisHost={}, redisPort={}", redisHost, redisPort);
         return template;
     }
 

@@ -11,10 +11,10 @@ services:
     volumes:
       - /Users/koko/opt/redis/etc/redis.conf:/usr/local/etc/redis/redis.conf
       - /Users/koko/opt/redis/data/log:/data/log
-      - /Users/koko/opt/redis/data/basis:/data/bases
+      - /Users/koko/opt/redis/data/bases:/data/bases
     command: redis-server /usr/local/etc/redis/redis.conf
     networks:
-    - default
+    - flunet
   flu:
     image: flu-docker
     hostname: flu
@@ -25,8 +25,11 @@ services:
     ports:
       - "8081:8081"
     networks:
-    - default
+    - flunet
     depends_on:
       - redis
+networks:
+  flunet:
+    driver: bridge
 
 
