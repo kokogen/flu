@@ -17,6 +17,7 @@ public class HeartBeatPublisherImpl implements IHeartBeatPublisher{
     public static int EXPIRATION_DUR = 10;
     public static String PREFIX_FOR_PERSON = "person:";
     public static String PREFIX_FOR_CHANNEL = "channel:";
+    public static String PREFIX_FOR_CHANNEL_AND_PERSON = "chanpsn:";
     public static String PREFIX_FOR_TOPIC = "topic:";
 
     @Autowired
@@ -29,7 +30,8 @@ public class HeartBeatPublisherImpl implements IHeartBeatPublisher{
         heartBeat.dt = (new Date()).toString();
         this.redisTemplate.opsForValue().set(heartBeat.person, heartBeat.toString());//.timeout(Duration.ofMinutes(EXPIRATION_DUR));
         this.redisTemplate.opsForSet().add(PREFIX_FOR_PERSON + heartBeat.person, heartBeat.toString());//.timeout(Duration.ofMinutes(EXPIRATION_DUR));
-        this.redisTemplate.opsForHash().put(PREFIX_FOR_CHANNEL + heartBeat.channel, heartBeat.person, heartBeat.toString());//.timeout(Duration.ofMinutes(EXPIRATION_DUR));
+        this.redisTemplate.opsForSet().add(PREFIX_FOR_CHANNEL + heartBeat.channel, heartBeat.toString());//.timeout(Duration.ofMinutes(EXPIRATION_DUR));
+        this.redisTemplate.opsForHash().put(PREFIX_FOR_CHANNEL_AND_PERSON + heartBeat.channel, heartBeat.person, heartBeat.toString());//.timeout(Duration.ofMinutes(EXPIRATION_DUR));
         this.redisTemplate.convertAndSend(PREFIX_FOR_TOPIC + heartBeat.channel, heartBeat.toString());//.timeout(Duration.ofMinutes(EXPIRATION_DUR));
     }
 

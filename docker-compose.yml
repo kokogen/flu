@@ -9,19 +9,24 @@ services:
     expose:
       - "6400"
     volumes:
-      - /Users/koko/opt/redis/etc/redis.conf:/usr/local/etc/redis/redis.conf
-      - /Users/koko/opt/redis/data/log:/data/log
-      - /Users/koko/opt/redis/data/bases:/data/bases
+      - /Users/koko/opt/flu/redis/etc/redis.conf:/usr/local/etc/redis/redis.conf
+      - /Users/koko/opt/flu/redis/log:/data/log
+      - /Users/koko/opt/flu/redis/db:/data/bases
     command: redis-server /usr/local/etc/redis/redis.conf
     networks:
     - flunet
   flu:
     image: flu-docker
-    hostname: flu
+    container_name: flu-api
+    hostname: flu-api
+    volumes:
+      - /Users/koko/opt/flu/flu-api/log:/var/log
     environment:
-      - DbaseUrl=/v1
-      - DredisHost=http://redis
-      - DredisPort=6400
+      LOG_PATH: /var/log
+      FILE_LOG_PATTERN: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%"
+      baseUrl: /v1
+      redisHost: redis
+      redisPort: 6379
     ports:
       - "8081:8081"
     networks:
