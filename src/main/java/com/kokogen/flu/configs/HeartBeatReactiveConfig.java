@@ -25,7 +25,7 @@ public class HeartBeatReactiveConfig {
 
     @Value("${redisPort}")
     private int redisPort;
-
+/*
     @Bean
     public RouterFunction<ServerResponse> route(HeartBeatHandler handler) {
         return RouterFunctions
@@ -36,7 +36,7 @@ public class HeartBeatReactiveConfig {
                 .andRoute(GET("/v1/hb/find/{channel}/{person}").and(accept(MediaType.APPLICATION_JSON)), handler::getHeartBeatByChannelAndPerson)
                 .andRoute(POST("/v1/hb").and(accept(MediaType.APPLICATION_JSON)), handler::save);
     }
-
+*/
     @Bean
     public LettuceConnectionFactory lettuceConnectionFactory() {
         RedisStandaloneConfiguration redisStandaloneConfig = new RedisStandaloneConfiguration();

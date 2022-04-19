@@ -10,9 +10,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 
-@Service
-@ActiveProfiles("test")
-public class TestHeartBeatService implements IHeartBeatService {
+public class TestHeartBeatService  {
 
     private ArrayList<HeartBeat> data = new ArrayList<>();
 
@@ -32,32 +30,26 @@ public class TestHeartBeatService implements IHeartBeatService {
         data.add(new HeartBeat("Andre","A-One","2022-04-14 19:10:00"));
     }
 
-    @Override
     public Mono<HeartBeat> save(HeartBeat heartBeat) {
         return Mono.just(heartBeat);
     }
 
-    @Override
     public Flux<Key> getAllPersons() {
         return Flux.fromStream(data.stream()).map(hb -> hb.person).distinct().map(Key::new);
     }
 
-    @Override
     public Flux<Key> getAllChannels() {
         return Flux.fromStream(data.stream()).map(hb -> hb.channel).distinct().map(Key::new);
     }
 
-    @Override
     public Flux<HeartBeat> getAllHeartBeatsByPerson(String person) {
         return Flux.fromStream(data.stream()).filter(hb -> hb.person.equals(person));
     }
 
-    @Override
     public Flux<HeartBeat> getAllHeartBeatsByChannel(String channel) {
         return Flux.fromStream(data.stream()).filter(hb -> hb.channel.equals(channel));
     }
 
-    @Override
     public Mono<HeartBeat> getHeartBeatByChannelAndPerson(String channel, String person) {
         return Mono.just(
                 data.stream()
