@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @WebFluxTest(HeartBeatController.class)
-public class TestHeartBeatHandler {
+public class TestHeartBeatController {
     @Autowired
     public WebTestClient client;
 

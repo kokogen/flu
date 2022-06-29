@@ -14,6 +14,8 @@ public class HeartBeat implements Serializable {
         this.dt = dt;
     }
 
+    public HeartBeat(){}
+
     @Override
     public String toString() {
         return "{" +
