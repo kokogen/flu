@@ -16,31 +16,31 @@ public class HeartBeatController {
 
     @GetMapping("/persons")
     public Flux<Key> getAllPersons(){
-        return heartBeatService.getAllPersons();
+        return heartBeatService.getAllPersons().onErrorReturn(FluException.class, new Key());
     }
 
     @GetMapping("/channels")
     public Flux<Key> getAllChannels(){
-        return heartBeatService.getAllChannels();
+        return heartBeatService.getAllChannels().onErrorReturn(FluException.class, new Key());
     }
 
     @GetMapping("/persons/{person}")
     public Flux<HeartBeat> getAllHeartBeatsByPerson(@PathVariable String person){
-        return heartBeatService.getAllHeartBeatsByPerson(person);
+        return heartBeatService.getAllHeartBeatsByPerson(person).onErrorReturn(FluException.class, new HeartBeat());
     }
 
     @GetMapping("/channels/{channel}")
     public Flux<HeartBeat> getAllHeartBeatsByChannel(@PathVariable String channel){
-        return heartBeatService.getAllHeartBeatsByChannel(channel);
+        return heartBeatService.getAllHeartBeatsByChannel(channel).onErrorReturn(FluException.class, new HeartBeat());
     }
 
     @GetMapping("/find/{channel}/{person}")
     public Mono<HeartBeat> getHeartBeatByChannelAndPerson(@PathVariable String channel, @PathVariable String person){
-        return heartBeatService.getHeartBeatByChannelAndPerson(channel, person);
+        return heartBeatService.getHeartBeatByChannelAndPerson(channel, person).onErrorReturn(FluException.class, new HeartBeat());
     }
 
     @PostMapping
     public Mono<HeartBeat> save(@RequestBody HeartBeat heartBeat){
-        return heartBeatService.save(heartBeat);
+        return heartBeatService.save(heartBeat).onErrorReturn(FluException.class, new HeartBeat());
     }
 }
